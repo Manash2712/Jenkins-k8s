@@ -6,7 +6,9 @@ pipeline{
   stages{
     stage('Initialize setting'){
       steps{
-        currentBuild.displayName = "Current-build-is-#${currentBuild.number}"
+        script{
+         currentBuild.displayName = "Current-build-is-#${currentBuild.number}" 
+        }
       }
     }
     stage('Build Docker Image'){
