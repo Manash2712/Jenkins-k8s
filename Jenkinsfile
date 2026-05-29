@@ -13,14 +13,14 @@ pipeline{
     }
     stage('Build Docker Image'){
       steps{
-       sh "docker build . -t manashchauhan/nodeapp/v1:${DOCKER_TAG}" 
+       sh "docker build . -t manashchauhan/nodeapp:v1:${DOCKER_TAG}" 
       }
     }
     stage('Push Docker Image'){
       steps{
         withCredentials([string(credentialsId: 'DockerHubPW', variable: 'dockerHubPwd')]) {
           sh "docker login -u manashchauhan -p ${dockerHubPwd}"
-          sh "docker push manashchauhan/nodeapp/v1:${DOCKER_TAG}" 
+          sh "docker push manashchauhan/nodeapp:v1:${DOCKER_TAG}" 
         }
       }
     }
