@@ -13,6 +13,6 @@ pipeline{
 }
 
 def getDockerTag(){
-  def dockerTag = sh script: 'git rev-parse HEAD', returnstdOut: true
+  def dockerTag = sh script: 'git rev-parse HEAD', returnStdout: true
   return dockerTag
 }
