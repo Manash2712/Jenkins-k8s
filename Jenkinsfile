@@ -1,13 +1,14 @@
 pipeline{
   agent any
   environment{
-    DOCKER_TAG = getDockerTag()
+    DOCKER_TAG = ""
   }
   stages{
     stage('Initialize setting'){
       steps{
         script{
-         currentBuild.displayName = "Current-build-is-#${currentBuild.number}" 
+         currentBuild.displayName = "Current-build-is-#${currentBuild.number}"
+         env.DOCKER_TAG = getDockerTag()
         }
       }
     }
@@ -38,6 +39,6 @@ pipeline{
 }
 
 def getDockerTag(){
-  def dockerTag = sh script: 'git rev-parse HEAD', returnStdout: true
+  def dockerTag = sh(script: 'git rev-parse HEAD', returnStdout: true).trim().take(7)
   return dockerTag
 }
