@@ -12,17 +12,12 @@ pipeline{
         }
       }
     }
-    stage('Build Docker Image'){
-      steps{
-       sh "docker build . -t manashchauhan/nodeapp:${DOCKER_TAG}" 
-      }
-    }
-    stage('Push Docker Image'){
+    stage('Build and Push Docker Image'){
       steps{
         withCredentials([string(credentialsId: 'DockerHubPW', variable: 'dockerHubPwd')]) {
           sh "docker login -u manashchauhan -p ${dockerHubPwd}" 
+          sh "docker buildx build --platform linux/amd64,linux/arm64 -t manashchauhan/nodeapp:${env.DOCKER_TAG} --push ."
         }
-        sh "docker push manashchauhan/nodeapp:${DOCKER_TAG}"
       }
     }
     stage('Deploy to k8s'){
