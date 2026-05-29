@@ -16,7 +16,7 @@ pipeline{
       steps{
         withCredentials([string(credentialsId: 'DockerHubPW', variable: 'dockerHubPwd')]) {
           sh "docker login -u manashchauhan -p ${dockerHubPwd}" 
-          sh "docker buildx build --platform linux/amd64,linux/arm64 -t manashchauhan/nodeapp:${env.DOCKER_TAG} --push ."
+          sh "docker buildx build --platform linux/amd64 -t manashchauhan/nodeapp:${env.DOCKER_TAG} --push ."
         }
       }
     }
