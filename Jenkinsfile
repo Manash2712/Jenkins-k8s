@@ -4,6 +4,11 @@ pipeline{
     DOCKER_TAG = getDockerTag()
   }
   stages{
+    stage('Initialize setting'){
+      steps{
+        currentBuild.displayName = "Current-build-is-#${currentBuild.number}"
+      }
+    }
     stage('Build Docker Image'){
       steps{
        sh "docker build . -t manashchauhan/nodeapp/v1:${DOCKER_TAG}" 
